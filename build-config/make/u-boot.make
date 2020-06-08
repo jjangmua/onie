@@ -34,9 +34,13 @@ UBOOT			= $(UBOOT_INSTALL_STAMP)
 UBOOT_NAME		= $(shell echo $(MACHINE_PREFIX) | tr [:lower:] [:upper:])
 UBOOT_MACHINE		?= $(UBOOT_NAME)
 UBOOT_BIN		= $(UBOOT_BUILD_DIR)/$(UBOOT_MACHINE)/u-boot.bin
+UBOOT_MLO		= $(UBOOT_BUILD_DIR)/$(UBOOT_MACHINE)/MLO
+UBOOT_IMG		= $(UBOOT_BUILD_DIR)/$(UBOOT_MACHINE)/u-boot.img
 UBOOT_PBL		= $(UBOOT_BUILD_DIR)/$(UBOOT_MACHINE)/u-boot.pbl
 UBOOT_DTB		= $(UBOOT_BUILD_DIR)/$(UBOOT_MACHINE)/u-boot-dtb.bin
-UBOOT_INSTALL_IMAGE	= $(IMAGEDIR)/$(MACHINE_PREFIX).u-boot
+UBOOT_INSTALL_BIN	= $(IMAGEDIR)/$(MACHINE_PREFIX).u-boot
+UBOOT_INSTALL_MLO	= $(IMAGEDIR)/$(MACHINE_PREFIX).MLO
+UBOOT_INSTALL_IMG	= $(IMAGEDIR)/$(MACHINE_PREFIX).boot.img
 UPDATER_UBOOT		= $(MBUILDDIR)/u-boot.bin
 ifeq ($(UBOOT_PBL_ENABLE),yes)
   UPDATER_UBOOT		+= $(MBUILDDIR)/u-boot.pbl
@@ -141,8 +145,10 @@ $(UBOOT_BUILD_STAMP): $(UBOOT_IMAGE)
 u-boot-install: $(UBOOT_INSTALL_STAMP)
 $(UBOOT_INSTALL_STAMP): $(UBOOT_BUILD_STAMP)
 	$(Q) echo "==== Installing u-boot ($(MACHINE_PREFIX)) ===="
-	$(Q) cp -v $(UBOOT_IMAGE) $(UBOOT_INSTALL_IMAGE)
-	$(Q) chmod a-x $(UBOOT_INSTALL_IMAGE)
+	$(Q) cp -v $(UBOOT_BIN) $(UBOOT_INSTALL_BIN)
+	$(Q) cp -v $(UBOOT_MLO) $(UBOOT_INSTALL_MLO)
+	$(Q) cp -v $(UBOOT_IMG) $(UBOOT_INSTALL_IMG)
+	$(Q) chmod a-x $(UBOOT_INSTALL_BIN)
 	$(Q) ln -sf $(UBOOT_BIN) $(MBUILDDIR)/u-boot.bin
 ifeq ($(UBOOT_PBL_ENABLE),yes)
 	$(Q) ln -sf $(UBOOT_PBL) $(MBUILDDIR)/u-boot.pbl
@@ -153,7 +159,9 @@ MACHINE_CLEAN += u-boot-clean
 u-boot-clean:
 	$(Q) rm -rf $(UBOOT_BUILD_DIR)
 	$(Q) rm -f $(UBOOT_STAMP)
-	$(Q) rm -f $(UBOOT_INSTALL_IMAGE)
+	$(Q) rm -f $(UBOOT_INSTALL_BIN)
+	$(Q) rm -f $(UBOOT_INSTALL_MLO)
+	$(Q) rm -f $(UBOOT_INSTALL_IMG)
 	$(Q) echo "=== Finished making $@ for $(PLATFORM)"
 
 DOWNLOAD_CLEAN += u-boot-download-clean
