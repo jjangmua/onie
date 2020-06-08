@@ -52,7 +52,7 @@ else
     FDT_LOAD_TEXT=""
 fi
 
-KERNEL_COMPRESSION="gzip"
+KERNEL_COMPRESSION="none"
 INITRD_LOAD="0x00000000"
 FDT="fdt = \"dtb\";"
 
