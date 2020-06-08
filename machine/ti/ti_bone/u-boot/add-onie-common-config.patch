@@ -1,0 +1,68 @@
+From a7f728ba32f8fd7902b4d08a5b0fc9497feeb970 Mon Sep 17 00:00:00 2001
+From: jjangmua <jjangmua@celestica.com>
+Date: Mon, 24 Feb 2020 14:42:20 +0700
+Subject: [PATCH] - add onie common config.
+
+---
+ include/configs/am335x_evm.h         | 11 +++++++++++
+ include/configs/onie_common_config.h |  4 ++--
+ 2 files changed, 13 insertions(+), 2 deletions(-)
+
+diff --git a/include/configs/am335x_evm.h b/include/configs/am335x_evm.h
+index 3fa31d8..a54d387 100644
+--- a/include/configs/am335x_evm.h
++++ b/include/configs/am335x_evm.h
+@@ -18,6 +18,7 @@
+ 
+ #include <configs/ti_am335x_common.h>
+ #include <linux/sizes.h>
++#include "configs/onie_common_config.h"
+ 
+ #ifndef CONFIG_SPL_BUILD
+ # define CONFIG_TIMESTAMP
+@@ -89,10 +90,20 @@
+ #include <environment/ti/dfu.h>
+ #include <environment/ti/mmc.h>
+ 
++#define CONFIG_PLATFORM_ENV \
++	"consoledev=ttyO0\0" \
++	"baudrate=115200\0" \
++	"onie_start=0x0900\0" \
++	"onie_sz.b=0x4000\0" \
++	"ipaddr=192.168.10.200\0" \
++	"serverip=192.168.10.1\0"
++
+ #define CONFIG_EXTRA_ENV_SETTINGS \
+ 	DEFAULT_LINUX_BOOT_ENV \
+ 	DEFAULT_MMC_TI_ARGS \
+ 	DEFAULT_FIT_TI_ARGS \
++	CONFIG_PLATFORM_ENV \
++	CONFIG_ONIE_COMMON_UBOOT_ENV \
+ 	"bootpart=0:2\0" \
+ 	"bootdir=/boot\0" \
+ 	"bootfile=zImage\0" \
+diff --git a/include/configs/onie_common_config.h b/include/configs/onie_common_config.h
+index c941e2a..8eb3b16 100644
+--- a/include/configs/onie_common_config.h
++++ b/include/configs/onie_common_config.h
+@@ -45,7 +45,7 @@
+ 	"onie_bootcmd=echo Loading Open Network Install Environment ...; " \
+ 	  "echo Platform: $onie_platform ; "				\
+ 	  "echo Version : $onie_version ; "				\
+-	  "cp.b $onie_start $loadaddr ${onie_sz.b} && "			\
++	  "mmc dev 1; mmc read ${loadaddr} ${onie_start} ${onie_sz.b}; "	\
+ 	  "run onie_args && bootm ${loadaddr}\0"
+ 
+ /*
+@@ -56,7 +56,7 @@
+  *                      Can be overriden.
+  */
+ #define CONFIG_ONIE_BOOT_ARGS \
+-	"onie_initargs=setenv bootargs quiet console=$consoledev,$baudrate\0" \
++	"onie_initargs=setenv bootargs console=$consoledev,$baudrate\0" \
+ 	"onie_platformargs=setenv bootargs $bootargs serial_num=${serial#} " \
+ 	"eth_addr=$ethaddr " \
+ 	"$onie_bootargs $onie_debugargs \0" \
+-- 
+2.17.1
+

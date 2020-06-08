@@ -1,0 +1,4 @@
+disable-spl-bootup-print-and-force-load-env-from-emm.patch
+relocate-U-Boot-save-env-to-0x0e0000.patch
+add-onie-common-config.patch
+clean-up-unused-config.patch

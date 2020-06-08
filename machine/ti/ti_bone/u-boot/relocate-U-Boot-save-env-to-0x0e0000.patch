@@ -1,0 +1,25 @@
+From 9efe603114ff30e60d0fac54a9b1d1288689bae2 Mon Sep 17 00:00:00 2001
+From: jjangmua <jjangmua@celestica.com>
+Date: Tue, 11 Feb 2020 13:56:39 +0700
+Subject: [PATCH 2/2] - relocate U-Boot save env to 0x0e0000.
+
+---
+ include/configs/am335x_evm.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/include/configs/am335x_evm.h b/include/configs/am335x_evm.h
+index 158b7d4..3fa31d8 100644
+--- a/include/configs/am335x_evm.h
++++ b/include/configs/am335x_evm.h
+@@ -279,7 +279,7 @@
+ #elif defined(CONFIG_EMMC_BOOT)
+ #define CONFIG_SYS_MMC_ENV_DEV		1
+ #define CONFIG_SYS_MMC_ENV_PART		0
+-#define CONFIG_ENV_OFFSET		0x260000
++#define CONFIG_ENV_OFFSET		0x0e0000
+ #define CONFIG_ENV_OFFSET_REDUND	(CONFIG_ENV_OFFSET + CONFIG_ENV_SIZE)
+ #define CONFIG_SYS_REDUNDAND_ENVIRONMENT
+ #define CONFIG_SYS_MMC_MAX_DEVICE	2
+-- 
+2.17.1
+
