@@ -8,7 +8,7 @@
 # nos-mode-arch.
 nos_mode_set_arch()
 {
-    fw_setenv -f onie_nos_mode "yes"
+    fw_setenv onie_nos_mode "yes"
 }
 
 # Arch dependent NOS mode get interface.  Implemented in
@@ -22,5 +22,5 @@ nos_mode_get_arch()
 # nos-mode-arch.
 nos_mode_clear_arch()
 {
-    fw_setenv -f onie_nos_mode > /dev/null 2>&1
+    fw_setenv onie_nos_mode > /dev/null 2>&1
 }

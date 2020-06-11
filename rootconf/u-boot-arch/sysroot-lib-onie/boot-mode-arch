@@ -11,7 +11,7 @@
 rescue_revert_default_arch()
 {
     # Delete the one time onie_boot_reason env variable.
-    fw_setenv -f onie_boot_reason > /dev/null 2>&1
+    fw_setenv onie_boot_reason > /dev/null 2>&1
     # The onie_boot_reason variable may not be set, which is ok.
     # Ignore failures.
     return 0
@@ -27,7 +27,7 @@ check_nos_mode_arch()
     if [ "$nos_mode" = "yes" ] ; then
         # Clear the current boot reason to prevent install mode from
         # being sticky.
-        fw_setenv -f onie_boot_reason > /dev/null 2>&1
+        fw_setenv onie_boot_reason > /dev/null 2>&1
         # The onie_boot_reason variable may not be set, which is ok.
         return 0
     fi
@@ -48,7 +48,7 @@ install_remain_sticky_arch()
 onie_boot_reason
 nos_bootcmd true
 EOF
-    ) | fw_setenv -f -s - > /dev/null 2>&1
+    ) | fw_setenv -s - > /dev/null 2>&1
     # The variables may not be set, which is ok.  Ignore failures.
     return 0
 }

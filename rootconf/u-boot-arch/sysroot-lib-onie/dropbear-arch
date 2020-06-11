@@ -55,7 +55,7 @@ get_keys_arch() {
             dss_val=$(uuencode -m $DSS_KEY d | tr ' \n' '@#')
             echo "$dss_var $dss_val" >> $tmp_env
         fi
-        fw_setenv -f -s $tmp_env || {
+        fw_setenv -s $tmp_env || {
             log_failure_msg "Unable to save dropbear ssh server keys"
         }            
         rm -f $tmp_env
