@@ -302,6 +302,12 @@ endif
 	$(Q) cp $(LSB_RELEASE_FILE) $(SYSROOTDIR)/etc/lsb-release
 	$(Q) cp $(OS_RELEASE_FILE) $(SYSROOTDIR)/etc/os-release
 	$(Q) cp $(MACHINE_CONF) $(SYSROOTDIR)/etc/machine-build.conf
+	$(Q) mkdir -p $(SYSROOTDIR)/boot
+	$(Q) $(MAKE) -C $(LINUXDIR) ARCH=$(KERNEL_ARCH) INSTALL_PATH=$(SYSROOTDIR)/boot zinstall
+	$(Q) $(MAKE) -C $(LINUXDIR) ARCH=$(KERNEL_ARCH) INSTALL_PATH=$(SYSROOTDIR)/boot dtbs_install
+	$(Q) $(MAKE) -C $(LINUXDIR) ARCH=$(KERNEL_ARCH) INSTALL_MOD_PATH=$(SYSROOTDIR) modules_install
+	$(Q) ln -s /boot/vmlinuz-$$(cat $(LINUXDIR)/include/config/kernel.release) $(SYSROOTDIR)/boot/vmlinuz
+	$(Q) ln -s /boot/dtbs/$$(cat $(LINUXDIR)/include/config/kernel.release)/$(KERNEL_DTB) $(SYSROOTDIR)/boot/dtb
 	$(Q) touch $@
 
 # This step creates the cpio archive and compresses it
