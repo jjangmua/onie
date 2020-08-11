@@ -306,8 +306,8 @@ endif
 	$(Q) $(MAKE) -C $(LINUXDIR) ARCH=$(KERNEL_ARCH) INSTALL_PATH=$(SYSROOTDIR)/boot zinstall
 	$(Q) $(MAKE) -C $(LINUXDIR) ARCH=$(KERNEL_ARCH) INSTALL_PATH=$(SYSROOTDIR)/boot dtbs_install
 	$(Q) $(MAKE) -C $(LINUXDIR) ARCH=$(KERNEL_ARCH) INSTALL_MOD_PATH=$(SYSROOTDIR) modules_install
-	$(Q) ln -s /boot/vmlinuz-$$(cat $(LINUXDIR)/include/config/kernel.release) $(SYSROOTDIR)/boot/vmlinuz
-	$(Q) ln -s /boot/dtbs/$$(cat $(LINUXDIR)/include/config/kernel.release)/$(KERNEL_DTB) $(SYSROOTDIR)/boot/dtb
+	$(Q) ln -sf /boot/vmlinuz-$$(cat $(LINUXDIR)/include/config/kernel.release) $(SYSROOTDIR)/boot/vmlinuz
+	$(Q) ln -sf /boot/dtbs/$$(cat $(LINUXDIR)/include/config/kernel.release)/$(KERNEL_DTB) $(SYSROOTDIR)/boot/dtb
 	$(Q) touch $@
 
 # This step creates the cpio archive and compresses it
