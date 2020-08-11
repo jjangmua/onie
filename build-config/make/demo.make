@@ -107,7 +107,7 @@ endif
 
 define demo_MKIMAGE
 	./scripts/onie-mk-demo.sh $(ROOTFS_ARCH) $(MACHINE) $(PLATFORM) \
-		$(DEMO_INSTALLER_DIR) $(MACHINEDIR)/demo/platform.conf $(1) $(2) $(DEMO_IMAGE_PARTS) 
+		$(DEMO_INSTALLER_DIR) $(MACHINEDIR)/demo/platform.conf $(1) $(2) $(DEMO_SYSROOT_CPIO_XZ)
 endef
 
 $(DEMO_OS_BIN) : $(DEMO_IMAGE_PARTS_COMPLETE) $(MACHINE_DEMO_DIR)/*
