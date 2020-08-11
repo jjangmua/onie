@@ -15,14 +15,14 @@ cmd="$1"
 # set for each platform.
 network_driver_platform_pre_init()
 {
-    # NO-OP
+    depmod -a
     true
 }
 
 # Primary network driver initialization.
 network_driver_init()
 {
-    echo Loading driver
+    echo "Info: Loading driver"
     modprobe cppi41
     modprobe usb_common
     modprobe usbcore
